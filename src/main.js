@@ -4,12 +4,11 @@ import router from './router'
 import store from './store'
 
 import './plugins/plugins'
+
 import 'lib-flexible'
 
 // 引入全局样式文件
 import './styles/main.less'
-
-import './utils/request'
 
 Vue.config.productionTip = false
 
