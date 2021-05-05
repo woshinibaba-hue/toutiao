@@ -97,6 +97,8 @@ export default {
       try {
         const { data } = await login(this.userInfo)
         console.log(data)
+        // 登录成功将用户信息保存至vuex当中
+        this.$store.commit('setUserInfo', data)
         // 由于toast有覆盖性，后面的会覆盖掉前面的，所有loading提示会自动关闭
         this.$toast.success('登录成功！')
       } catch (error) {
