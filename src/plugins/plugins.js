@@ -9,7 +9,13 @@ import {
   Field,
   Toast,
   NoticeBar,
-  CountDown
+  CountDown,
+  CellGroup,
+  Image as VanImage,
+  Lazyload,
+  Grid,
+  GridItem,
+  Dialog
 } from 'vant'
 
 Vue.use(Button)
@@ -22,3 +28,9 @@ Vue.use(Field)
 Vue.use(Toast)
 Vue.use(NoticeBar)
 Vue.use(CountDown)
+Vue.use(CellGroup)
+Vue.use(VanImage)
+Vue.use(Lazyload)
+Vue.use(Grid)
+Vue.use(GridItem)
+Vue.use(Dialog)

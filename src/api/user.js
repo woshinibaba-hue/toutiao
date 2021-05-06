@@ -17,3 +17,11 @@ export const send = (mobile) => {
     method: 'get'
   })
 }
+
+// 获取用户信息
+export const getCurrentUser = () => {
+  return request({
+    url: '/app/v1_0/user',
+    method: 'get'
+  })
+}
