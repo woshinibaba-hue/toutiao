@@ -9,10 +9,10 @@
           :src="item"
         />
       </div>
-      <div class="article-text">
+      <div class="article-text" :class="{'textTop' : article.cover.images.length === 1}">
         <span class="name">{{article.aut_name}}</span>
         <span class="comm_count">{{article.comm_count}}条评论</span>
-        <span class="pubdate">{{article.pubdate}}</span>
+        <span class="pubdate">{{article.pubdate | relativeTime}}</span>
       </div>
     </div>
     <van-image
@@ -66,5 +66,8 @@ export default {
       width: 117px;
       height: 74px;
     }
+  }
+  .textTop {
+    padding-top: 30px;
   }
 </style>

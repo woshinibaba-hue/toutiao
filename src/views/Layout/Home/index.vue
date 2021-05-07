@@ -65,6 +65,12 @@ export default {
     left: 0;
     right: 0;
     z-index: 1;
+    .van-tabs__line {
+      width: 15px;
+      height: 3px;
+      background-color: #3296fa;
+      bottom: 20px;
+    }
   }
   /deep/.van-tabs__content {
   margin-top: 90px;

@@ -7,6 +7,8 @@ import './plugins/plugins'
 
 import 'lib-flexible'
 
+import './utils/dayjs'
+
 // 引入全局样式文件
 import './styles/main.less'
 
