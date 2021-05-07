@@ -149,8 +149,13 @@ export default {
     background: url("./img/banner.png") no-repeat;
     background-size: cover;
     .img {
-      width: 66px;
-      height: 66px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 56px;
+        height: 56px;
+      }
     }
     .text {
       color: #fff;

@@ -15,7 +15,11 @@ import {
   Lazyload,
   Grid,
   GridItem,
-  Dialog
+  Dialog,
+  Tab,
+  Tabs,
+  List,
+  PullRefresh
 } from 'vant'
 
 Vue.use(Button)
@@ -34,3 +38,7 @@ Vue.use(Lazyload)
 Vue.use(Grid)
 Vue.use(GridItem)
 Vue.use(Dialog)
+Vue.use(Tab)
+Vue.use(Tabs)
+Vue.use(List)
+Vue.use(PullRefresh)

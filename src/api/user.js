@@ -25,3 +25,11 @@ export const getCurrentUser = () => {
     method: 'get'
   })
 }
+
+// 获取用户频道信息
+export const getChannels = () => {
+  return request({
+    url: '/app/v1_0/user/channels',
+    method: 'get'
+  })
+}
