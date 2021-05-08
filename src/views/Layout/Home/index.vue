@@ -73,8 +73,8 @@ export default {
     }
   }
   /deep/.van-tabs__content {
-  margin-top: 90px;
-  margin-bottom: 50px;
-}
+    margin-top: 90px;
+    margin-bottom: 50px;
+  }
 }
 </style>
