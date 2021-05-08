@@ -19,7 +19,11 @@ import {
   Tab,
   Tabs,
   List,
-  PullRefresh
+  PullRefresh,
+  Popup,
+  Swipe,
+  SwipeItem,
+  Icon
 } from 'vant'
 
 Vue.use(Button)
@@ -42,3 +46,7 @@ Vue.use(Tab)
 Vue.use(Tabs)
 Vue.use(List)
 Vue.use(PullRefresh)
+Vue.use(Popup)
+Vue.use(Swipe)
+Vue.use(SwipeItem)
+Vue.use(Icon)

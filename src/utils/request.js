@@ -1,8 +1,10 @@
 // 请求模块
 import axios from 'axios'
 
+// 导入store
 import store from '../store/index'
 
+// 创建axios实例对象
 const request = axios.create({
   baseURL: 'http://ttapi.research.itcast.cn/'
 })

@@ -6,25 +6,45 @@
         >搜索</van-button>
     </van-nav-bar>
     <!-- 文章频道列表 -->
-    <van-tabs v-model="active">
+    <van-tabs v-model="active" swipeable animated>
       <van-tab v-for="item in userChannels" :key="item.id" :title="item.name">
         <ArticleList :channel='item' class="article-list"/>
       </van-tab>
+      <!-- 由于图标按钮时固定定位，会脱离文档流，这样就导致会覆盖一部分内容，这时就可以使用一个占位的盒子，让这个盒子的宽度与图标宽度一致就可以解决了 -->
+      <div slot="nav-right" class="placeholder"></div>
+      <!-- 展开文章频道列表按钮 -->
+      <div slot="nav-right" class="popup">
+        <van-icon name="wap-nav" @click="isPopup = true" />
+      </div>
     </van-tabs>
+    <!-- 文章频道列表 -->
+    <van-popup
+      closeable
+      :overlay='false'
+      v-model="isPopup"
+      position="bottom"
+      close-icon="close"
+      close-icon-position="top-left"
+      get-container="body"
+      style="height: 100%">
+      <ChannelEdit :userChannels='userChannels'  />
+    </van-popup>
   </div>
 </template>
 
 <script>
 import { getChannels } from '../../../api/user'
 import ArticleList from './components/article-list'
+import ChannelEdit from './components/channel-edit'
 export default {
   data () {
     return {
       active: 0,
-      userChannels: [] // 用户频道信息
+      userChannels: [], // 用户频道信息
+      isPopup: true
     }
   },
-  components: { ArticleList },
+  components: { ArticleList, ChannelEdit },
   created () {
     this.getUserChannel()
   },
@@ -70,6 +90,31 @@ export default {
       height: 3px;
       background-color: #3296fa;
       bottom: 20px;
+    }
+    .placeholder {
+      width: 33px;
+      // 由于tab栏默认给了flex布局，并且里面所有的元素已经平分了父元素的宽度，如果这个元素不想参与平分，可以设置 flex-shrink: 0; 就可以了
+      flex-shrink: 0;
+    }
+    .popup {
+      position: fixed;
+      right: 0;
+      height: 44px;
+      width: 40px;
+      background-color: rgba(255, 255, 255, .9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .van-icon-wap-nav {
+        font-size: 24px;
+      }
+      &::before {
+        content: '';
+        background: url('./line.png') no-repeat;
+        width: 1px;
+        height: 40px;
+        margin: 7px 5px 0 0;
+      }
     }
   }
   /deep/.van-tabs__content {
