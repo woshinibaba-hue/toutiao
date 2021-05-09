@@ -10,7 +10,7 @@
         @load="onLoad"
       >
         <!-- //! 文章列表模块 -->
-        <ArticleItem v-for="item in articleList" :key="item.art_id" :article='item'/>
+        <ArticleItem v-for="(item,i) in articleList" :key="i" :article='item'/>
       </van-list>
     </van-pull-refresh>
   </div>

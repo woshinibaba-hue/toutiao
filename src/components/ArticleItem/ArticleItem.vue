@@ -1,7 +1,15 @@
 // ! 文章列表模块
 
 <template>
-  <van-cell class="article-item">
+  <van-cell
+    class="article-item"
+    :to="{
+      name : 'Article',
+      params : {
+        articleId: article.art_id
+      }
+    }"
+  >
     <div class="title van-multi-ellipsis--l3" slot="title">{{ article.title }}</div>
     <div slot="label">
       <div class="cover-wrap" v-if="article.cover.images.length === 3">

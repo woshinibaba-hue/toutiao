@@ -38,6 +38,13 @@ const routes = [
   {
     path: '/search',
     component: () => import('@/views/Search')
+  },
+  {
+    path: '/article/:articleId',
+    name: 'Article',
+    component: () => import('@/views/Article'),
+    // 设置为 true，就会将 动态路由参数映射到组件props属性当中
+    props: true
   }
 ]
 
