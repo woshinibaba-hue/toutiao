@@ -25,7 +25,12 @@
     />
 
     <!-- //! 搜索历史模块-->
-    <search-history v-else :searchHistoies='searchHistoies' />
+    <search-history
+      v-else
+      @deleleAllHis='searchHistoies = $event'
+      :searchHistoies='searchHistoies'
+      @search='onSearch'
+    />
 
   </div>
 </template>
@@ -38,7 +43,7 @@ import searchResult from './components/searchResult'
 import { setItem, getItem } from '../../utils/storage'
 import { mapState } from 'vuex'
 
-import { getSearchHistory } from '../../api/search'
+// import { getSearchHistory } from '../../api/search'
 
 export default {
   data () {
@@ -48,6 +53,12 @@ export default {
       // 控制搜索结果页面的显示隐藏
       isResultShow: false,
       searchHistoies: [] // 搜索历史记录
+    }
+  },
+  watch: {
+    // 监听 searchHistoies 搜索历史记录数组变化
+    searchHistoies () {
+      setItem('search-history', this.searchHistoies)
     }
   },
   computed: {
@@ -85,13 +96,13 @@ export default {
       this.searchHistoies = getItem('search-history') || []
 
       // 如果用户已经登录
-      if (this.userInfo) {
-        // 获取线上接口的历史记录，由于后端只保存了用户最后搜索的 4 条记录，
-        // 那么此时就需要将本地的历史记录与线上的合并在一起了
-        const { data } = await getSearchHistory()
-        // ! 利用 es6 的set方法对数组进行去重, Set 是一个构造函数，它类似数组，但是它的每一项是唯一的，如果出现重复的会自动去除
-        this.searchHistoies = [...new Set([...this.searchHistoies, ...data.keywords])]
-      }
+      // if (this.userInfo) {
+      //    获取线上接口的历史记录，由于后端只保存了用户最后搜索的 4 条记录，
+      //    那么此时就需要将本地的历史记录与线上的合并在一起了
+      //   const { data } = await getSearchHistory()
+      //    ! 利用 es6 的set方法对数组进行去重, Set 是一个构造函数，它类似数组，但是它的每一项是唯一的，如果出现重复的会自动去除
+      //   this.searchHistoies = [...new Set([...this.searchHistoies, ...data.keywords])]
+      // }
     }
   }
 }
