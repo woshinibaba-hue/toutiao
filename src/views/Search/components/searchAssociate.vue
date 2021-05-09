@@ -6,6 +6,7 @@
       v-for="(item,index) in searchSuggestion"
       :key="index"
       icon="search"
+      @click="$emit('search', item)"
     >
       <div v-html="highlightStr(item)"></div>
     </van-cell>

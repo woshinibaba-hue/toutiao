@@ -12,14 +12,28 @@
         <van-icon name="delete-o" />
       </van-cell>
     </van-cell-group>
+
     <!-- //! 搜索历史列表 -->
     <van-cell-group>
-      <van-cell title="123">
-        <van-icon name="close" />
-      </van-cell>
-      <van-cell title="456">
+      <van-cell
+        :title="item"
+        v-for="(item,index) in searchHistoies"
+        :key="index">
         <van-icon name="close" />
       </van-cell>
     </van-cell-group>
   </div>
 </template>
+
+<script>
+
+export default {
+  props: {
+    // 历史记录
+    searchHistoies: {
+      type: Array,
+      required: true
+    }
+  }
+}
+</script>
