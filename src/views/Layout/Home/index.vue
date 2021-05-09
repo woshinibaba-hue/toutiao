@@ -1,3 +1,5 @@
+// ! 首页模块
+
 <template>
   <div class="home-container">
     <!-- 导航栏按钮区域 -->
@@ -17,7 +19,8 @@
         <van-icon name="wap-nav" @click="isPopup = true" />
       </div>
     </van-tabs>
-    <!-- 文章频道列表 -->
+
+    <!-- 频道列表弹出层-->
     <van-popup
       closeable
       :overlay='false'
@@ -27,7 +30,16 @@
       close-icon-position="top-left"
       get-container="body"
       style="height: 100%">
-      <ChannelEdit :userChannels='userChannels'  />
+      <!--
+          //! 在原生事件中，$event是事件对象
+          //! 在自定义事件中，$event是传递过来的数据
+      -->
+      <!-- 频道列表模块 -->
+      <ChannelEdit
+        :userChannels='userChannels'
+        @close='isPopup = false'
+        @toggle-channel='active = $event'
+        :active='active' />
     </van-popup>
   </div>
 </template>
@@ -36,6 +48,8 @@
 import { getChannels } from '../../../api/user'
 import ArticleList from './components/article-list'
 import ChannelEdit from './components/channel-edit'
+import { mapState } from 'vuex'
+import { getItem } from '../../../utils/storage'
 export default {
   data () {
     return {
@@ -44,6 +58,10 @@ export default {
       isPopup: true
     }
   },
+  computed: {
+    // 将vuex中的state状态映射到计算属性当中
+    ...mapState(['userInfo'])
+  },
   components: { ArticleList, ChannelEdit },
   created () {
     this.getUserChannel()
@@ -51,8 +69,28 @@ export default {
   methods: {
     // 获取用户频道信息
     async getUserChannel () {
-      const { data } = await getChannels()
-      this.userChannels = data.channels
+      let userChannel = []
+      if (this.userInfo) {
+        // 用户已登录
+        const { data } = await getChannels()
+        userChannel = data.channels
+      } else {
+        // 用户未已登录
+
+        // 获取本地存储的频道信息
+        const Stochannel = getItem('user-channel')
+        // 判断本地存储是否存在频道信息
+        if (Stochannel) {
+          // 存在
+          userChannel = Stochannel
+        } else {
+          // 不存在
+          const { data } = await getChannels()
+          userChannel = data.channels
+        }
+      }
+      // 将获取的数据存入data当中
+      this.userChannels = userChannel
     }
   }
 }

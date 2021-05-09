@@ -1,3 +1,5 @@
+// !文章列表展示模块
+
 <template>
   <div class="article-wrap">
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh" :head-height='80'>
@@ -7,6 +9,7 @@
         finished-text="没有更多了"
         @load="onLoad"
       >
+        <!-- //! 文章列表模块 -->
         <ArticleItem v-for="item in articleList" :key="item.art_id" :article='item'/>
       </van-list>
     </van-pull-refresh>

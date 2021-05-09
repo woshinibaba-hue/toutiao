@@ -1,3 +1,5 @@
+// ! 文章列表模块
+
 <template>
   <van-cell class="article-item">
     <div class="title van-multi-ellipsis--l3" slot="title">{{ article.title }}</div>
@@ -27,6 +29,7 @@
 <script>
 export default {
   props: {
+    // 接受的文章列表数据
     article: {
       type: Object,
       required: true

@@ -1,7 +1,13 @@
+// ! 我的页面模块
+
 <template>
   <div class="my-wrap">
+
+    <!-- //! 登录状态下的头部 -->
+
     <van-cell-group class="user-info" v-if="userInfo">
       <van-cell center :border="false">
+        <!-- //! 头像区域 -->
         <van-image
           class="avatar"
           slot="icon"
@@ -28,6 +34,9 @@
         </van-grid-item>
       </van-grid>
     </van-cell-group>
+
+    <!-- //! 未登录下的头部 -->
+
     <div class="not-login" v-else>
       <div class="img" @click="$router.push('/login')">
         <img src="./img/未登录.png" alt="" />
@@ -36,6 +45,7 @@
         <span>登录 / 注册</span>
       </div>
     </div>
+
     <van-grid :column-num="2" class="mb-4">
       <van-grid-item
         class="iconfont"
@@ -72,6 +82,8 @@ export default {
     ...mapState(['userInfo'])
   },
   created () {
+    // 调用获取用户信息接口直接，需要进行判断
+    // 当 userInfo 不为空时，也就是 userInfo 有token时，才需要去调用接口获取用户信息
     this.userInfo && this.getUserInfo()
   },
   methods: {

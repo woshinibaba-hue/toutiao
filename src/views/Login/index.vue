@@ -1,3 +1,5 @@
+// ! 登录模块
+
 <template>
   <div>
     <van-nav-bar title="登录 / 注册" left-arrow @click-left="$router.back()" />
@@ -32,10 +34,10 @@
         placeholder="请输入验证码"
         :rules="fromRules.code"
       >
-        <template #button>
-          <van-count-down :time="1000 * 60" format="ss s" v-if="isSendSms" @finish='isSendSms = false' />
-          <van-button class="code" size="mini" round @click.prevent="onSend" v-else :loading='isSendLoading' loading-text="请稍后...">发送验证码</van-button>
-        </template>
+      <template #button>
+        <van-count-down :time="1000 * 60" format="ss s" v-if="isSendSms" @finish='isSendSms = false' />
+        <van-button class="code" size="mini" round @click.prevent="onSend" v-else :loading='isSendLoading' loading-text="请稍后...">发送验证码</van-button>
+      </template>
       </van-field>
       <!-- 登录按钮 -->
       <div class="login-btn">
