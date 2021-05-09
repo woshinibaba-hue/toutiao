@@ -34,6 +34,10 @@ const routes = [
         component: () => import('@/views/Layout/My')
       }
     ]
+  },
+  {
+    path: '/search',
+    component: () => import('@/views/Search')
   }
 ]
 

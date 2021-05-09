@@ -23,7 +23,8 @@ import {
   Popup,
   Swipe,
   SwipeItem,
-  Icon
+  Icon,
+  Search
 } from 'vant'
 
 Vue.use(Button)
@@ -50,3 +51,4 @@ Vue.use(Popup)
 Vue.use(Swipe)
 Vue.use(SwipeItem)
 Vue.use(Icon)
+Vue.use(Search)

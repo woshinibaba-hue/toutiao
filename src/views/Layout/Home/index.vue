@@ -4,7 +4,7 @@
   <div class="home-container">
     <!-- 导航栏按钮区域 -->
     <van-nav-bar>
-      <van-button slot="title" class="search-btn" icon="search" round
+      <van-button slot="title" class="search-btn" icon="search" round to="/search"
         >搜索</van-button>
     </van-nav-bar>
     <!-- 文章频道列表 -->
@@ -55,7 +55,7 @@ export default {
     return {
       active: 0,
       userChannels: [], // 用户频道信息
-      isPopup: true
+      isPopup: false
     }
   },
   computed: {
