@@ -24,7 +24,8 @@ import {
   Swipe,
   SwipeItem,
   Icon,
-  Search
+  Search,
+  Divider
 } from 'vant'
 
 Vue.use(Button)
@@ -52,3 +53,4 @@ Vue.use(Swipe)
 Vue.use(SwipeItem)
 Vue.use(Icon)
 Vue.use(Search)
+Vue.use(Divider)
