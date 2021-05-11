@@ -11,6 +11,7 @@
       v-for="(item, index) in commentList"
       :key="index"
       :comment='item'
+      @reply-click='$emit("reply-click",$event)'
     />
     </van-list>
   </div>
@@ -22,9 +23,18 @@ import { getComments } from '../../../../api/comment'
 import CommentItem from '../CommentItem'
 export default {
   props: {
+    // 请求id，获取文章评论，传递文章id
+    // 获取回复评论，传递评论id
     source: {
       type: [Object, Number, String],
       required: true
+    },
+    // 评论类型
+    // 文章评论传递 a
+    // 回复评论传递 c
+    type: {
+      type: String,
+      default: 'a'
     },
     // 评论列表
     commentList: {
@@ -47,7 +57,7 @@ export default {
     async onLoad () {
       const { data } = await getComments({
         // 评论类型，a-对文章(article)的评论，c-对评论(comment)的回复
-        type: 'a',
+        type: this.type,
         // 源id，文章id或评论id
         source: this.source.toString(),
         // 获取评论数据的偏移量，值为评论id，表示从此id的数据向后取，不传表示从第一页开始读取数据

@@ -40,6 +40,7 @@
         :source='articleId'
         :commentList='commentList'
         @comment-count='ccommentCount = $event'
+        @reply-click='onReply'
       />
     </div>
 
@@ -69,6 +70,19 @@
         @pop-success='popSuccess'
       />
     </van-popup>
+
+    <!-- 评论回复弹出层 -->
+    <van-popup
+      v-model="isReplyPopShow"
+      position="bottom"
+    >
+      <ReplyComment
+        v-if="isReplyPopShow"
+        @close='isReplyPopShow = false'
+        :comment='replyComment'
+        :articleId='articleId'
+      />
+    </van-popup>
   </div>
 </template>
 
@@ -92,6 +106,8 @@ import CommentList from './components/CommentList'
 
 import PopComment from './components/Pop-Comment'
 
+import ReplyComment from './components/ReplyComment'
+
 export default {
   props: {
     // 通过动态路由映射过来的 props 参数
@@ -106,13 +122,15 @@ export default {
       aryicleDetail: {}, // 文章详情数据
       isLoading: false, // 关注按钮loading状态
       isCommentPopShow: false, // 控制评论弹出层
-      ccommentCount: 0 // 评论总数量
+      ccommentCount: 0, // 评论总数量
+      isReplyPopShow: false, // 控制回复评论弹出层
+      replyComment: {} // 需要回复的评论
     }
   },
   created () {
     this.getArticle()
   },
-  components: { CommentList, PopComment },
+  components: { CommentList, PopComment, ReplyComment },
   methods: {
     // 获取文章详情
     async getArticle () {
@@ -198,6 +216,13 @@ export default {
       this.ccommentCount++
       // 关闭评论弹出层
       this.isCommentPopShow = false
+    },
+    // 展示文章回复列表
+    onReply (comment) {
+      // 展开回复评论弹出层
+      this.isReplyPopShow = true
+      // 将传递过来的评论，保存至data当中
+      this.replyComment = comment
     }
   }
 }
@@ -259,10 +284,11 @@ export default {
         height: 35px;
         margin-left: 15px;
         text-align: left;
+        background-color: #2892ff;
         .van-button__content {
           .van-button__text {
             font-size: 15px;
-            color: #a7a7a7;
+            color: #fff;
           }
         }
       }
