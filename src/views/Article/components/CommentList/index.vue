@@ -25,11 +25,17 @@ export default {
     source: {
       type: [Object, Number, String],
       required: true
+    },
+    // 评论列表
+    commentList: {
+      type: Array,
+      // ! 注意点，数组 或者 对象 的默认值，必须通过 函数 返回值 进行设置
+      default: () => []
     }
   },
   data () {
     return {
-      commentList: [], // 评论数据
+      // commentList: [], // 评论数据
       loading: false, // 获取评论的loading提示
       finished: false, // 控制数据是否已经加载完毕
       limit: 10, // 获取评论的数量
@@ -43,12 +49,13 @@ export default {
         // 评论类型，a-对文章(article)的评论，c-对评论(comment)的回复
         type: 'a',
         // 源id，文章id或评论id
-        source: this.source,
+        source: this.source.toString(),
         // 获取评论数据的偏移量，值为评论id，表示从此id的数据向后取，不传表示从第一页开始读取数据
         offset: this.offset,
         // 获取评论的个数
         limit: this.limit
       })
+      this.$emit('comment-count', data.total_count)
       // 将本次请求的数组保存到 data 当中
       this.commentList.push(...data.results)
       // 将本次请求loading关闭

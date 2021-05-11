@@ -36,7 +36,11 @@
       <van-divider>正文结束</van-divider>
 
       <!-- 评论区域 -->
-      <CommentList :source='articleId' />
+      <CommentList
+        :source='articleId'
+        :commentList='commentList'
+        @comment-count='ccommentCount = $event'
+      />
     </div>
 
     <!-- 底部区域 -->
@@ -49,7 +53,7 @@
         :color="aryicleDetail.attitude === 1 ? 'orange' : '#777'"
         @click="onLike"
       ></van-tabbar-item>
-      <van-tabbar-item icon="chat-o"  badge="99+"></van-tabbar-item>
+      <van-tabbar-item icon="chat-o"  :badge="ccommentCount"></van-tabbar-item>
       <van-tabbar-item
         :icon="aryicleDetail.is_collected ? 'star' : 'star-o'"
         color="#777"
@@ -58,9 +62,12 @@
       <van-tabbar-item icon="share-o" color="#777"></van-tabbar-item>
     </van-tabbar>
 
-    <!-- 弹出层部分 -->
+    <!-- 评论弹出层部分 -->
     <van-popup v-model="isCommentPopShow" position="bottom">
-      <PopComment />
+      <PopComment
+        :target='articleId'
+        @pop-success='popSuccess'
+      />
     </van-popup>
   </div>
 </template>
@@ -95,9 +102,11 @@ export default {
   },
   data () {
     return {
+      commentList: [], // 评论详情数据
       aryicleDetail: {}, // 文章详情数据
       isLoading: false, // 关注按钮loading状态
-      isCommentPopShow: false // 控制评论弹出层
+      isCommentPopShow: false, // 控制评论弹出层
+      ccommentCount: 0 // 评论总数量
     }
   },
   created () {
@@ -181,6 +190,14 @@ export default {
         this.$toast('收藏成功')
       }
       this.aryicleDetail.is_collected = !this.aryicleDetail.is_collected
+    },
+    // 监听发布评论子组件的发布成功事件
+    popSuccess (comment) {
+      // 将新添加的评论添加评论顶部
+      this.commentList.unshift(comment)
+      this.ccommentCount++
+      // 关闭评论弹出层
+      this.isCommentPopShow = false
     }
   }
 }
