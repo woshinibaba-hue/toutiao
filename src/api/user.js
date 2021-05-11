@@ -33,3 +33,19 @@ export const getChannels = () => {
     method: 'get'
   })
 }
+
+// 获取用户详细资料
+export const getUserInfo = () => {
+  return request({
+    url: '/app/v1_0/user/profile'
+  })
+}
+
+// 编辑用户个人资料
+export const alterUserInfo = data => {
+  return request({
+    url: '/app/v1_0/user/profile',
+    method: 'PATCH',
+    data
+  })
+}

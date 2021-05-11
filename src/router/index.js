@@ -45,6 +45,11 @@ const routes = [
     component: () => import('@/views/Article'),
     // 设置为 true，就会将 动态路由参数映射到组件props属性当中
     props: true
+  },
+  {
+    path: '/user/alter',
+    name: 'UserAlter',
+    component: () => import('@/views/UserAlter')
   }
 ]
 
