@@ -19,3 +19,7 @@ Vue.filter('relativeTime', date => {
   // 获取当前时间指定时间的相对时间
   return dayjs().to(dayjs(date))
 })
+
+Vue.filter('dataTime', (date, format = 'YYYY-MM-DD HH:mm:ss') => {
+  return dayjs(date).format(format)
+})

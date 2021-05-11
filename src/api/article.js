@@ -73,3 +73,12 @@ export const DeleteCollect = articleId => {
     method: 'DELETE'
   })
 }
+
+// 对文章进行评论
+export const addComment = data => {
+  return request({
+    url: ' /app/v1_0/comments',
+    method: 'POST',
+    data
+  })
+}

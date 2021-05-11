@@ -42,7 +42,7 @@
     <!-- 底部区域 -->
     <van-tabbar>
       <van-tabbar-item>
-        <van-button round>写评论</van-button>
+        <van-button round @click="isCommentPopShow = true">写评论</van-button>
       </van-tabbar-item>
       <van-tabbar-item
         :icon="aryicleDetail.attitude === 1 ? 'good-job' : 'good-job-o'"
@@ -57,6 +57,11 @@
       ></van-tabbar-item>
       <van-tabbar-item icon="share-o" color="#777"></van-tabbar-item>
     </van-tabbar>
+
+    <!-- 弹出层部分 -->
+    <van-popup v-model="isCommentPopShow" position="bottom">
+      <PopComment />
+    </van-popup>
   </div>
 </template>
 
@@ -76,7 +81,9 @@ import {
 //  引入 ImagePreview 用于函数式调用预览图片
 import { ImagePreview } from 'vant'
 
-import CommentList from '../../components/CommentList'
+import CommentList from './components/CommentList'
+
+import PopComment from './components/Pop-Comment'
 
 export default {
   props: {
@@ -89,13 +96,14 @@ export default {
   data () {
     return {
       aryicleDetail: {}, // 文章详情数据
-      isLoading: false // 关注按钮loading状态
+      isLoading: false, // 关注按钮loading状态
+      isCommentPopShow: false // 控制评论弹出层
     }
   },
   created () {
     this.getArticle()
   },
-  components: { CommentList },
+  components: { CommentList, PopComment },
   methods: {
     // 获取文章详情
     async getArticle () {

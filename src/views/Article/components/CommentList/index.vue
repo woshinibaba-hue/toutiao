@@ -7,17 +7,19 @@
       @load="onLoad"
     >
     <van-cell>全部评论</van-cell>
-      <van-cell
-        v-for="(item, index) in commentList"
-        :key="index"
-        :title="item.content"
-      />
+    <CommentItem
+      v-for="(item, index) in commentList"
+      :key="index"
+      :comment='item'
+    />
     </van-list>
   </div>
 </template>
 
 <script>
-import { getComments } from '../../api/comment'
+import { getComments } from '../../../../api/comment'
+
+import CommentItem from '../CommentItem'
 export default {
   props: {
     source: {
@@ -34,6 +36,7 @@ export default {
       offset: null // 页码
     }
   },
+  components: { CommentItem },
   methods: {
     async onLoad () {
       const { data } = await getComments({
@@ -64,11 +67,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.comment-wrap {
-  .van-list {
-    /deep/.van-list__finished-text {
-      font-size: 6px;
-    }
-  }
-}
 </style>
