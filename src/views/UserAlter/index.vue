@@ -94,9 +94,10 @@
     <van-popup
       v-model="isPreviewImgShow"
       position="right"
-      style='height:100%'
+      style='height:100%;'
     >
       <UpdatePhoto
+       v-if="isPreviewImgShow"
         :file='previewImgUrl'
         @close='isPreviewImgShow=false'
         @updata-photo='user.photo = $event'

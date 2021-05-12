@@ -7,12 +7,16 @@
       @click-left="$emit('close')"
       @click-right="onConfirm"
     />
-    <img :src="imgUrl" alt="">
+    <img :src="imgUrl" ref="image" />
   </div>
 </template>
 
 <script>
 import { editPhoto } from '../../../../api/user'
+// 引入头像裁切的样式
+import 'cropperjs/dist/cropper.css'
+// 引入头像裁切的主函数
+import Cropper from 'cropperjs'
 export default {
   props: {
     file: {
@@ -23,8 +27,25 @@ export default {
   data () {
     return {
       // ! 在使用的时候，需要将 file 对象转换为 blob 才能进行使用
-      imgUrl: window.URL.createObjectURL(this.file)
+      imgUrl: window.URL.createObjectURL(this.file),
+      cropper: null // 图像裁剪实例
     }
+  },
+  created () {
+    this.$nextTick(() => {
+      const image = this.$refs.image
+      // 将图像裁剪实例保存至data当中
+      this.cropper = new Cropper(image, {
+        viewMode: 1,
+        dragMode: 'move',
+        aspectRatio: 1,
+        autoCropArea: 1,
+        cropBoxMovable: false,
+        cropBoxResizable: false,
+        background: false,
+        movable: true
+      })
+    })
   },
   methods: {
     async onConfirm () {
@@ -40,18 +61,38 @@ export default {
 
       // ! 向 fromdata 实例添加需要传递的数据
       // ! fd.append(属性名，属性值), 此时就需要传递一个 file 对象才可以
-      fd.append('photo', this.file)
+      // fd.append('photo', this.file)
+
+      // cropper 默认返回的是 file 对象  使用的时候需要进行转换才可以
+      // 获取裁剪之后的图片
+      const file = await this.getCroppedCanvas()
+
+      // 此时就将裁剪之后的图片发送给后端
+      fd.append('photo', file)
 
       //! 此时就将fromdata对象传递过去
       await editPhoto(fd)
 
-      this.$emit('updata-photo', this.imgUrl)
+      // this.$emit('updata-photo', this.imgUrl)
+
+      // 发送给父组件的就是裁剪之后的图片了
+      this.$emit('updata-photo', window.URL.createObjectURL(file))
 
       // 关闭弹出层
       this.$emit('close')
 
       // 提示用户
       this.$toast.success('修改成功')
+    },
+    // 获取裁剪之后的头像
+    getCroppedCanvas () {
+      // 返回一个 promise 对象
+      return new Promise(resolve => {
+        // 由于 cropper 这个它不支持promise，最好就是使用promise包装一下
+        this.cropper.getCroppedCanvas().toBlob(blob => {
+          resolve(blob)
+        })
+      })
     }
   }
 }
@@ -67,7 +108,10 @@ export default {
     color: #fff;
   }
 }
-img{
-  margin-top: 46px;
+/deep/.cropper-container {
+  margin-top: 50%;
+}
+/deep/ .cropper-wrap-box {
+  overflow: unset;
 }
 </style>
