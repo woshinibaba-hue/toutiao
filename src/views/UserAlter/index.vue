@@ -90,14 +90,16 @@
     />
     </van-popup>
 
-    <!-- 修改生日弹出层 -->
+    <!-- 修改头像弹出层 -->
     <van-popup
       v-model="isPreviewImgShow"
       position="right"
       style='height:100%'
     >
       <UpdatePhoto
-        :imgUrl='previewImgUrl'
+        :file='previewImgUrl'
+        @close='isPreviewImgShow=false'
+        @updata-photo='user.photo = $event'
       />
     </van-popup>
   </div>
@@ -139,7 +141,9 @@ export default {
     },
     // 预览图片
     previewImg () {
-      const blob = window.URL.createObjectURL(this.$refs.image.files[0])
+      // ! 由于后端需要传递 file 对象， 此时就不能在此转换了
+      // const blob = window.URL.createObjectURL(this.$refs.image.files[0])
+      const blob = this.$refs.image.files[0]
       this.previewImgUrl = blob
 
       // 预览图片
