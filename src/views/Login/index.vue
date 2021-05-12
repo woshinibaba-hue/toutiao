@@ -102,6 +102,10 @@ export default {
         this.$store.commit('setUserInfo', data)
         // 由于toast有覆盖性，后面的会覆盖掉前面的，所有loading提示会自动关闭
         this.$toast.success('登录成功！')
+
+        // 移除缓存当中的组件
+        this.$store.commit('removeKeep', 'Layout')
+
         // 登录成功，返回上一级
         this.$router.back()
       } catch (error) {

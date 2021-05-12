@@ -19,6 +19,7 @@ import 'cropperjs/dist/cropper.css'
 import Cropper from 'cropperjs'
 export default {
   props: {
+    // 接受父组件传递的 file 头像对象
     file: {
       type: Object.file,
       required: true

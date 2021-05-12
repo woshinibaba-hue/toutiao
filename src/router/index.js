@@ -50,6 +50,11 @@ const routes = [
     path: '/user/alter',
     name: 'UserAlter',
     component: () => import('@/views/UserAlter')
+  },
+  {
+    path: '/user/cart',
+    name: 'UserCart',
+    component: () => import('@/views/User-cart')
   }
 ]
 

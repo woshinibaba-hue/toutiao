@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-view></router-view>
+    <router-view />
     <van-tabbar route>
       <van-tabbar-item icon="home-o" to="/">首页</van-tabbar-item>
       <van-tabbar-item icon="comment-circle-o" to='/qs'>问答</van-tabbar-item>
@@ -12,10 +12,15 @@
 
 <script>
 export default {
+  name: 'Layout',
   data () {
     return {
 
     }
+  },
+  mounted () {
+    // 让该组件重新被缓存
+    this.$store.commit('addKeep', 'Layout')
   }
 }
 </script>

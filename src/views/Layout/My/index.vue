@@ -68,7 +68,7 @@
       />
     </van-grid>
     <van-cell title="消息通知" is-link to="/" />
-    <van-cell title="小智同学" is-link to="/" class="mb-4" />
+    <van-cell title="小智同学" is-link to="/user/cart" class="mb-4" />
     <van-button block class="out-btn" v-if="userInfo" @click="outLogin"
       >退出登录</van-button
     >
@@ -79,6 +79,7 @@ import { mapState } from 'vuex'
 import { getCurrentUser } from '../../../api/user'
 
 export default {
+  name: 'My',
   data () {
     return {
       currentUser: {} // 当前用户信息
