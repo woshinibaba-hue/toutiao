@@ -25,7 +25,9 @@ import {
   SwipeItem,
   Icon,
   Search,
-  Divider
+  Divider,
+  Picker,
+  DatetimePicker
 } from 'vant'
 
 Vue.use(Button)
@@ -54,3 +56,5 @@ Vue.use(SwipeItem)
 Vue.use(Icon)
 Vue.use(Search)
 Vue.use(Divider)
+Vue.use(Picker)
+Vue.use(DatetimePicker)

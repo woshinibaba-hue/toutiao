@@ -2,8 +2,8 @@
   <div>
     <van-nav-bar
       title="修改昵称"
+      left-text="取消"
       right-text="完成"
-      left-arrow
       @click-left="$emit('close')"
       @click-right='alterName'
     />
@@ -11,6 +11,7 @@
       <van-field
         v-model="message"
         autosize
+        clearable
         type="textarea"
         maxlength="7"
         placeholder="请输入昵称"
@@ -21,10 +22,11 @@
 </template>
 
 <script>
-import { alterUserInfo } from '../../../../api/user'
+import { alterUserInfo } from '@/api/user'
 export default {
   props: {
-    userName: {
+    // 接受父组件使用 v-model 传递过来的 value 数据
+    value: {
       type: String,
       required: true
     }
@@ -32,12 +34,13 @@ export default {
   data () {
     return {
       // 输入框内容
-      message: this.userName
+      message: this.value
     }
   },
   methods: {
     // 点击完成修改昵称
     async alterName () {
+      // 开启loading提示
       this.$toast.loading({
         message: '修改中...',
         forbidClick: true // 禁止背景点击
@@ -46,11 +49,18 @@ export default {
         await alterUserInfo({
           name: this.message
         })
-        this.$emit('update-name', this.message)
+        //! 由于父组件使用 v-model 绑定的数据，那么此时如果需要修改，则需要发射一个 input 事件，因为v-model 默认监听的是input事件
+        this.$emit('input', this.message)
+        // 关闭修改昵称页面
         this.$emit('close')
+        // 提示用户修改成功
         this.$toast.success('修改成功')
       } catch (error) {
-        this.$toast.fail('昵称重复')
+        if (error && error.response && error.response.status === 409) {
+          this.$toast.fail('昵称重复')
+        } else {
+          console.log('未知错误')
+        }
       }
     }
   }
