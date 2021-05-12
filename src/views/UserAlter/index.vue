@@ -5,7 +5,20 @@
       left-arrow
       @click-left="$router.back()"
     />
-    <van-cell title="头像" is-link center>
+    <!-- 用于选择图片 -->
+    <input
+      type="file"
+      accept="image/*"
+      hidden
+      ref="image"
+      @change="previewImg"
+    />
+    <van-cell
+      title="头像"
+      is-link
+      center
+      @click="$refs.image.click()"
+    >
       <van-image
         width="100"
         height="100"
@@ -76,6 +89,17 @@
       @close='isBirthdayShow = false'
     />
     </van-popup>
+
+    <!-- 修改生日弹出层 -->
+    <van-popup
+      v-model="isPreviewImgShow"
+      position="right"
+      style='height:100%'
+    >
+      <UpdatePhoto
+        :imgUrl='previewImgUrl'
+      />
+    </van-popup>
   </div>
 </template>
 
@@ -85,6 +109,7 @@ import { getUserInfo } from '../../api/user'
 import UpdateName from './components/UpdateName'
 import UpdateGender from './components/UpdateGender'
 import UpdateBirthday from './components/UpdateBirthday'
+import UpdatePhoto from './components/UpdatePhoto'
 export default {
   data () {
     return {
@@ -92,7 +117,9 @@ export default {
       isAlterShow: false,
       isGenderShow: false, // 控制性别修改弹出层
       isBirthdayShow: false, // 控制生日修改弹出层
-      user: {} // 用户信息
+      isPreviewImgShow: false, // 控制修改图片弹出层
+      user: {}, // 用户信息
+      previewImgUrl: '' // 需要预览的图片
     }
   },
   created () {
@@ -101,13 +128,27 @@ export default {
   components: {
     UpdateName,
     UpdateGender,
-    UpdateBirthday
+    UpdateBirthday,
+    UpdatePhoto
   },
   methods: {
     // 获取用户详细资料
     async getUserInfo () {
       const { data } = await getUserInfo()
       this.user = data
+    },
+    // 预览图片
+    previewImg () {
+      const blob = window.URL.createObjectURL(this.$refs.image.files[0])
+      this.previewImgUrl = blob
+
+      // 预览图片
+      this.isPreviewImgShow = true
+
+      // 清空 file 的 value
+      // 用于选择一次文件之后, 选择的文件会被储存在value当中，
+      // 如果在此选择相同的文件，就无法触发该change事件了
+      this.$refs.image.value = ''
     }
   }
 }
