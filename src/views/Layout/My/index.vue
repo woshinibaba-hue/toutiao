@@ -45,7 +45,7 @@
     <!-- //! 未登录下的头部 -->
 
     <div class="not-login" v-else>
-      <div class="img" @click="$router.push('/login')">
+      <div class="img" @click="$router.push('/login?redirect=/my')">
         <img src="./img/未登录.png" alt="" />
       </div>
       <div class="text">

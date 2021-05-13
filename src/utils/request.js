@@ -12,11 +12,7 @@ import router from '../router'
 
 // 创建axios实例，用于刷新用户 token
 const refreshTokenReq = axios.create({
-  baseURL: 'http://ttapi.research.itcast.cn/app/v1_0/authorizations',
-  headers: {
-    Authorization: `Bearer ${store.state.userInfo.refresh_token}`
-  },
-  method: 'PUT'
+  baseURL: 'http://ttapi.research.itcast.cn/app/v1_0/authorizations'
 })
 
 // 创建axios实例对象
@@ -66,7 +62,12 @@ request.interceptors.response.use(config => config.data,
       } else {
         try {
           // 如果存在，就发送请求获取最新的token
-          const { data } = await refreshTokenReq()
+          const { data } = await refreshTokenReq({
+            headers: {
+              Authorization: `Bearer ${store.state.userInfo.refresh_token}`
+            },
+            method: 'PUT'
+          })
           // 将重新获取的 token 设置回 userInfoToken
           userInfoToken.token = data.data.token
           // 通过提交 mutations 来更新token
@@ -90,7 +91,8 @@ request.interceptors.response.use(config => config.data,
 
 // 跳转至登录也
 function redirectLogin () {
-  router.replace('/login')
+  const currentPath = router.currentRoute.fullPath
+  router.replace(`/login?redirect=${currentPath}`)
 }
 
 // 导出

@@ -107,7 +107,12 @@ export default {
         this.$store.commit('removeKeep', 'Layout')
 
         // 登录成功，返回上一级
-        this.$router.back()
+        // this.$router.back()
+        if (this.$route.query.redirect) {
+          this.$router.push(this.$route.query.redirect)
+        } else {
+          this.$router.push('/')
+        }
       } catch (error) {
         this.$toast.fail('登录失败，手机号或验证码错误！')
       }
